@@ -19,6 +19,7 @@ cache:
     directories:
         - .phpunit
         - ~/php-ext
+        
 before_install:
   composer self-update
 
@@ -26,6 +27,7 @@ install:
     - composer update --no-progress --ansi
     - ./phpunit install
     - yarn install
+
 script:
   - yarn dev
   - php bin/phpunit
