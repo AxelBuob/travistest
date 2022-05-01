@@ -21,10 +21,12 @@ cache:
       - ~/php-ext
 
 before_install:
-  composer self-update
+  - composer self-update
+  - yarn install
+  - yarn dev
 
 install:
   - composer update --no-progress
-  
+
 script:
   - ./bin/phpunit
