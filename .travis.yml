@@ -8,6 +8,7 @@ git:
 addons:
     apt_packages:
         - yarn
+        - node
 
 matrix:
     include:
