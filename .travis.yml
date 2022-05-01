@@ -1,32 +1,15 @@
+os: linux
+dist: xenial
 language: php
 
-git:
-    depth: 1
-
-matrix:
-    include:
-        - php: 8.0
-    fast_finish: true
-
 cache:
-    directories:
-        - .phpunit
-        - ~/php-ext
+  yarn: true
+  directories:
+    - $HOME/.composer/cache
 
-before_install:
-    - |
-      # Install extra PHP extensions
-      for PHP in $TRAVIS_PHP_VERSION $php_extra; do
-          export PHP=$PHP
-          phpenv global $PHP
-          INI=~/.phpenv/versions/$PHP/etc/conf.d/travis.ini
-          if [[ $PHP != 8.* ]]; then
-              tfold ext.zookeeper tpecl zookeeper-0.7.2 zookeeper.so $INI
-          fi
-      done
 install:
-    - composer update --no-progress
-    - ./phpunit install
-
+  - composer install --no-interaction
+  - yarn install
 script:
-    - ./phpunit --colors
+  - yarn dev
+  - php bin/phpunit
