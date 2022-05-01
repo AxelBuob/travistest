@@ -15,20 +15,6 @@ cache:
 
 before_install:
     - |
-      # php.ini configuration
-      for PHP in $TRAVIS_PHP_VERSION $php_extra; do
-          INI=~/.phpenv/versions/$PHP/etc/conf.d/travis.ini
-          echo date.timezone = Europe/Paris >> $INI
-          echo memory_limit = -1 >> $INI
-          echo default_socket_timeout = 10 >> $INI
-          echo session.gc_probability = 0 >> $INI
-          echo opcache.enable_cli = 1 >> $INI
-          echo apc.enable_cli = 1 >> $INI
-      done
-      find ~/.phpenv -name xdebug.ini -delete
-      composer self-update
-      composer self-update --2
-    - |
       # Install extra PHP extensions
       for PHP in $TRAVIS_PHP_VERSION $php_extra; do
           export PHP=$PHP
@@ -39,12 +25,8 @@ before_install:
           fi
       done
 install:
-    - export COMPONENTS=$(find src/Symfony -mindepth 2 -type f -name phpunit.xml.dist -not -wholename '*/Bridge/PhpUnit/*' -printf '%h\n' | sort)
-    - export COMPOSER_ROOT_VERSION=$(grep ' VERSION = ' src/Symfony/Component/HttpKernel/Kernel.php | grep -P -o '[0-9]+\.[0-9]+').x-dev
-    - composer update --no-progress --ansi
+    - composer update --no-progress
     - ./phpunit install
 
 script:
-    - echo "$COMPONENTS" | parallel --gnu -j +3 "tfold {} ./phpunit --exclude-group tty,benchmark,intl-data {}"
-    - tfold src/Symfony/Component/Console.tty ./phpunit src/Symfony/Component/Console --group tty
-    - tfold src/Symfony/Bridge/Twig.tty ./phpunit src/Symfony/Bridge/Twig --group tty
+    - ./phpunit --colors
