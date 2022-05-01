@@ -24,7 +24,7 @@ cache:
 
 before_install:
   - composer self-update
-  - yarn install
+  - yarn install --ignore-engines
   - yarn dev
 
 install:
