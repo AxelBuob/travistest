@@ -1,7 +1,12 @@
 language: php
+sudo: false
+cache:
+  directories:
+    - $HOME/.composer/cache
+    - $HOME/symfony-bridge/.phpunit
 php:
   - 8.1.5
 install:
-  - composer install --dev
+  - composer install --prefer-dist --no-interaction
 script:
-  - ./vendor/bin/phpunit
+  - ./vendor/bin/phpunit --colors
