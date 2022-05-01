@@ -5,11 +5,6 @@ dist: bionic
 git:
     depth: 1
 
-addons:
-    apt_packages:
-        - npm
-        - yarn
-
 matrix:
     include:
         - php: 8.1
