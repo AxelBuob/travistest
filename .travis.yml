@@ -16,17 +16,16 @@ matrix:
 
 cache:
   yarn: true
-    directories:
-        - .phpunit
-        - ~/php-ext
-        
+  directories:
+      - .phpunit
+      - ~/php-ext
+
 before_install:
   composer self-update
 
 install:
-    - composer update --no-progress --ansi
+    - composer update --no-progress
     - ./phpunit install
-    - yarn install
 
 script:
   - yarn dev
