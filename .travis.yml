@@ -8,7 +8,7 @@ cache:
     - $HOME/.composer/cache
 
 install:
-  - composer install --no-interaction
+  - composer update
   - yarn install
 script:
   - yarn dev
